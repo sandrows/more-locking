@@ -1,0 +1,37 @@
+public class Main {
+
+    public static void main(String[] args) {
+
+        final CentralResource1 resource = new CentralResource1();
+
+        Thread microServiceA = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    String data = resource.getData("Thread A");
+                    System.out.println(data);
+
+                    try {Thread.sleep(1000);}
+                    catch (InterruptedException ex) {ex.printStackTrace();}
+                }
+            }
+        });
+
+        Thread microServiceB = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    String data = resource.getData("Thread B");
+                    System.out.println(data);
+
+                    try {Thread.sleep(1500);}
+                    catch (InterruptedException ex) {ex.printStackTrace();}
+                }
+            }
+        });
+
+        microServiceA.start();
+        microServiceB.start();
+    }
+
+}
